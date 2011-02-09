@@ -1,0 +1,27 @@
+From: Alessandro Ghedini <al3xbio@gmail.com>
+Date: Wed, 9 Feb 2011 15:34:54 +0100
+Subject: [PATCH] fix CFLAGS and LDFAGS deferred variables
+
+CFLAGS and LDFLAGS are set as "deferred" /using the '?' mark), therefore
+they get ignored during Debian build
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9948b47..05d6428 100644
+--- a/Makefile
++++ b/Makefile
+@@ -26,9 +26,9 @@ else ifeq ($(uname_S),Darwin)
+   STLIBNAME?=libhiredis.a
+   STLIB_MAKE_CMD?=libtool -static -o ${STLIBNAME} - ${OBJ}
+ else
+-  CFLAGS?=-std=c99 -pedantic $(OPTIMIZATION) -fPIC -Wall -W -Wwrite-strings $(ARCH) $(PROF)
++  CFLAGS=-std=c99 -pedantic $(OPTIMIZATION) -fPIC -Wall -W -Wwrite-strings $(ARCH) $(PROF)
+   CCLINK?=-lm -pthread
+-  LDFLAGS?=-L. -Wl,-rpath,.
++  LDFLAGS=-L. -Wl,-rpath,.
+   DYNAME?=libhiredis.so
+   DYLIBNAME?=$(DYNAME).$(VERSION)
+   SONAME?=$(DYNAME).0
+-- 
