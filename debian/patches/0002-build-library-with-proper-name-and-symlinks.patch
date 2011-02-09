@@ -1,0 +1,63 @@
+From: Alessandro Ghedini <al3xbio@gmail.com>
+Date: Wed, 9 Feb 2011 15:24:38 +0100
+Subject: [PATCH] build library with proper name and symlinks
+
+Build the library using the libname.so.X.Y.Z namescheme, and generate
+libname.so.X and libname.so symbolic links.
+---
+ Makefile |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index f96e12d..9948b47 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,6 +4,7 @@
+ 
+ OBJ = net.o hiredis.o sds.o async.o
+ BINS = hiredis-example hiredis-test
++VERSION = 0.9.2
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ OPTIMIZATION?=-O3
+@@ -28,8 +29,10 @@ else
+   CFLAGS?=-std=c99 -pedantic $(OPTIMIZATION) -fPIC -Wall -W -Wwrite-strings $(ARCH) $(PROF)
+   CCLINK?=-lm -pthread
+   LDFLAGS?=-L. -Wl,-rpath,.
+-  DYLIBNAME?=libhiredis.so
+-  DYLIB_MAKE_CMD?=gcc -shared -Wl,-soname,${DYLIBNAME} -o ${DYLIBNAME} ${OBJ}
++  DYNAME?=libhiredis.so
++  DYLIBNAME?=$(DYNAME).$(VERSION)
++  SONAME?=$(DYNAME).0
++  DYLIB_MAKE_CMD?=gcc -shared -Wl,-soname,${SONAME} -o ${DYLIBNAME} ${OBJ}
+   STLIBNAME?=libhiredis.a
+   STLIB_MAKE_CMD?=ar rcs ${STLIBNAME} ${OBJ}
+ endif
+@@ -53,6 +56,8 @@ test.o: test.c hiredis.h
+ 
+ ${DYLIBNAME}: ${OBJ}
+ 	${DYLIB_MAKE_CMD}
++	ln -s $(DYLIBNAME) $(SONAME)
++	ln -s $(SONAME) $(DYNAME)
+ 
+ ${STLIBNAME}: ${OBJ}
+ 	${STLIB_MAKE_CMD}
+@@ -86,7 +91,7 @@ test: hiredis-test
+ 	$(CC) -c $(CFLAGS) $(OBJARCH) $(DEBUG) $(COMPILE_TIME) $<
+ 
+ clean:
+-	rm -rf ${DYLIBNAME} ${STLIBNAME} $(BINS) hiredis-example* *.o *.gcda *.gcno *.gcov
++	rm -rf ${DYNAME}* ${STLIBNAME} $(BINS) hiredis-example* *.o *.gcda *.gcno *.gcov
+ 
+ dep:
+ 	$(CC) -MM *.c
+@@ -94,7 +99,7 @@ dep:
+ install: ${DYLIBNAME} ${STLIBNAME}
+ 	mkdir -p $(INSTALL_INC) $(INSTALL_LIB)
+ 	$(INSTALL) hiredis.h async.h adapters $(INSTALL_INC)
+-	$(INSTALL) ${DYLIBNAME} ${STLIBNAME} $(INSTALL_LIB)
++	$(INSTALL) ${DYNAME}* ${STLIBNAME} $(INSTALL_LIB)
+ 
+ 32bit:
+ 	@echo ""
+-- 
