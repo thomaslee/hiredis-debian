@@ -1,4 +1,4 @@
-Format: http://dep.debian.net/deps/dep5
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=166
 Upstream-Name: hiredis
 Upstream-Contact: Salvatore Sanfilippo <antirez@gmail.com>
 Source: https://github.com/antirez/hiredis
