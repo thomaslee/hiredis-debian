@@ -1,9 +1,10 @@
 From: Alessandro Ghedini <al3xbio@gmail.com>
 Date: Wed, 9 Feb 2011 15:34:54 +0100
-Subject: [PATCH] fix CFLAGS and LDFAGS deferred variables
+Subject: [PATCH] fix CFLAGS and LDFAGS conditional variables
 
-CFLAGS and LDFLAGS are set as "deferred" /using the '?' mark), therefore
-they get ignored during Debian build
+CFLAGS and LDFLAGS are assigned using the conditional variable assignment
+operator  (?=). Since dpkg-buildflags also set those variables they don't get
+defined in the Makefile, making the build fail.
 ---
  Makefile |    4 ++--
  1 files changed, 2 insertions(+), 2 deletions(-)
@@ -24,4 +25,4 @@ index 9948b47..05d6428 100644
    DYNAME?=libhiredis.so
    DYLIBNAME?=$(DYNAME).$(VERSION)
    SONAME?=$(DYNAME).0
--- 
+--
