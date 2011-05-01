@@ -9,11 +9,11 @@ libhiredis.so.0 libhiredis0 #MINVER#
  redisAsyncConnect@Base 0.9.2
  redisAsyncConnectUnix@Base 0.9.2
  redisAsyncDisconnect@Base 0.9.2
+ redisAsyncFree@Base 0.10.0
  redisAsyncHandleRead@Base 0.9.2
  redisAsyncHandleWrite@Base 0.9.2
  redisAsyncSetConnectCallback@Base 0.9.2
  redisAsyncSetDisconnectCallback@Base 0.9.2
- redisAsyncSetReplyObjectFunctions@Base 0.9.2
  redisBufferRead@Base 0.9.2
  redisBufferWrite@Base 0.9.2
  redisCommand@Base 0.9.2
@@ -22,28 +22,26 @@ libhiredis.so.0 libhiredis0 #MINVER#
  redisConnectNonBlock@Base 0.9.2
  redisConnectUnix@Base 0.9.2
  redisConnectUnixNonBlock@Base 0.9.2
+ redisConnectUnixWithTimeout@Base 0.10.0
+ redisConnectWithTimeout@Base 0.10.0
  redisContextConnectTcp@Base 0.9.2
  redisContextConnectUnix@Base 0.9.2
+ redisContextSetTimeout@Base 0.10.0
  redisFormatCommand@Base 0.9.2
  redisFormatCommandArgv@Base 0.9.2
  redisFree@Base 0.9.2
  redisGetReply@Base 0.9.2
  redisGetReplyFromReader@Base 0.9.2
  redisProcessCallbacks@Base 0.9.2
- redisReplyReaderCreate@Base 0.9.2
- redisReplyReaderFeed@Base 0.9.2
- redisReplyReaderFree@Base 0.9.2
- redisReplyReaderGetError@Base 0.9.2
- redisReplyReaderGetObject@Base 0.9.2
- redisReplyReaderGetReply@Base 0.9.2
- redisReplyReaderSetPrivdata@Base 0.9.2
- redisReplyReaderSetReplyObjectFunctions@Base 0.9.2
- redisSetReplyObjectFunctions@Base 0.9.2
+ redisReaderCreate@Base 0.10.0
+ redisReaderFeed@Base 0.10.0
+ redisReaderFree@Base 0.10.0
+ redisReaderGetReply@Base 0.10.0
+ redisSetTimeout@Base 0.10.0
  redisvAppendCommand@Base 0.9.2
  redisvAsyncCommand@Base 0.9.2
  redisvCommand@Base 0.9.2
  redisvFormatCommand@Base 0.9.2
- sdsavail@Base 0.9.2
  sdscat@Base 0.9.2
  sdscatlen@Base 0.9.2
  sdscatprintf@Base 0.9.2
@@ -57,7 +55,7 @@ libhiredis.so.0 libhiredis0 #MINVER#
  sdsfree@Base 0.9.2
  sdsfreesplitres@Base 0.9.2
  sdsfromlonglong@Base 0.9.2
- sdslen@Base 0.9.2
+ sdsgrowzero@Base 0.10.0
  sdsnew@Base 0.9.2
  sdsnewlen@Base 0.9.2
  sdsrange@Base 0.9.2
