@@ -1,3 +1,4 @@
 0001-use-proper-destdir.patch
 0002-build-dynamic-library-with-proper-name-and-symlinks.patch
 0003-fix-build-of-example-and-test.patch
+0004-fix-CFLAGS-and-LDFAGS-conditional-variables.patch
