@@ -7,6 +7,9 @@
 override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
 
-# Temporarily disable test, because they are failing on buildd
 override_dh_auto_test:
-	echo "Test disabled"
+	redis-server ./debian/redis-test.conf
+	dh_auto_test
+	kill `cat /tmp/redis.pid`
+	rm /tmp/redis.pid
+	rm /tmp/redis.sock
