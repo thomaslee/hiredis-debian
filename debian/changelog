@@ -1,6 +1,11 @@
+hiredis (0.10.1-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Alessandro Ghedini <al3xbio@gmail.com>  Wed, 29 Jun 2011 11:28:17 +0200
+
 hiredis (0.10.0-1) unstable; urgency=low
 
   * Initial release (Closes: #612601)
-  * 
 
  -- Alessandro Ghedini <al3xbio@gmail.com>  Sun, 01 May 2011 21:09:51 +0200
