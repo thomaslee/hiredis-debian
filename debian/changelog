@@ -1,8 +1,19 @@
 hiredis (0.10.1-1) unstable; urgency=low
 
   * New upstream release 
+  * Drop patches (no more needed)
+    - build-dynamic-library-with-proper-name-and-symlinks
+    - fix-build-of-example-and-test
+    - fix-CFLAGS-and-LDFAGS-conditional-variables
+  * Update use-proper-destdir patch
+  * Disable tests temporarily
+  * Do not install TODO anymore
+  * Update *.symbols file
+  * Install changelog
+  * Bump debhelper compat level to 8
+  * Rename libhiredis0 -> libhiredis0.10
 
- -- Alessandro Ghedini <al3xbio@gmail.com>  Wed, 29 Jun 2011 11:28:17 +0200
+ -- Alessandro Ghedini <al3xbio@gmail.com>  Wed, 29 Jun 2011 12:05:18 +0200
 
 hiredis (0.10.0-1) unstable; urgency=low
 
