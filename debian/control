@@ -1,7 +1,7 @@
 Source: hiredis
 Priority: optional
 Maintainer: Alessandro Ghedini <al3xbio@gmail.com>
-Build-Depends: debhelper (>= 7), redis-server
+Build-Depends: debhelper (>= 8), redis-server
 Standards-Version: 3.9.2
 Section: libs
 Homepage: https://github.com/antirez/hiredis
