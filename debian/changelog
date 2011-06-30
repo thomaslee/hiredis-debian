@@ -1,3 +1,9 @@
+hiredis (0.10.1-2) unstable; urgency=low
+
+  * Re-enable tests, start Redis with proper configuration before testing
+
+ -- Alessandro Ghedini <al3xbio@gmail.com>  Thu, 30 Jun 2011 19:46:04 +0200
+
 hiredis (0.10.1-1) unstable; urgency=low
 
   * New upstream release 
