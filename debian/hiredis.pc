@@ -1,11 +1,11 @@
 prefix=/usr
-exec_prefix=/usr
-libdir=/usr/lib
-includedir=/usr/include
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
 
-Name: LibHiredis
+Name: Hiredis
 Description: Minimalistic C client library for the Redis database.
-Version: 0.9.0
+Version: 0.10.1
 Libs: -L${libdir} -lhiredis
 Cflags: -I${includedir}
 
