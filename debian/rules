@@ -8,10 +8,8 @@ override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
 
 override_dh_auto_test:
-ifneq ($(shell dpkg-architecture -qDEB_BUILD_ARCH),sparc)
 	redis-server ./debian/redis-test.conf
 	dh_auto_test
 	kill `cat /tmp/redis.pid`
 	rm -f /tmp/redis.pid
 	rm -f /tmp/redis.sock
-endif
