@@ -1,3 +1,13 @@
+hiredis (0.10.1-4) unstable; urgency=low
+
+  * Add -f flag to rm in dh_auto_test override (Closes: #650800)
+  * Re-enable tests on sparc since #647627 has been fixed in redis-server 
+    2:2.4.2-2
+  * Bump Build-Depends on redis-server to (>= 2:2.4.2-2) to avoid build
+    failures on sparc
+
+ -- Alessandro Ghedini <al3xbio@gmail.com>  Mon, 12 Dec 2011 21:47:59 +0100
+
 hiredis (0.10.1-3) unstable; urgency=low
 
   * Add disable-returns-error-when-the-port-is-not-open-test patch 
