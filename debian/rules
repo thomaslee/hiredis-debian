@@ -12,6 +12,6 @@ ifneq ($(shell dpkg-architecture -qDEB_BUILD_ARCH),mipsel)
 	redis-server ./debian/redis-test.conf
 	dh_auto_test
 	kill `cat /tmp/redis.pid`
-	rm -f /tmp/redis.pid
-	rm -f /tmp/redis.sock
+	$(RM) /tmp/redis.pid
+	$(RM) /tmp/redis.sock
 endif
