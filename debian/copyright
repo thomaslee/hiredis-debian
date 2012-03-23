@@ -4,22 +4,22 @@ Upstream-Contact: Salvatore Sanfilippo <antirez@gmail.com>
 Source: https://github.com/antirez/hiredis
 
 Files: *
-Copyright: 2009-2010, Salvatore Sanfilippo <antirez@gmail.com>
+Copyright: 2009-2011, Salvatore Sanfilippo <antirez@gmail.com>
 License: BSD-3-Clause
 
 Files: async.c hiredis.*
 Copyright:
- 2009-2010, Salvatore Sanfilippo <antirez@gmail.com>
- 2010, Pieter Noordhuis <pcnoordhuis@gmail.com>
+ 2009-2011, Salvatore Sanfilippo <antirez@gmail.com>
+ 2010-2011, Pieter Noordhuis <pcnoordhuis@gmail.com>
 License: BSD-3-Clause
 
-Files: net.c
+Files: net.*
 Copyright:
- 2006-2010, Salvatore Sanfilippo <antirez@gmail.com>
- 2010, Pieter Noordhuis <pcnoordhuis@gmail.com>
+ 2006-2011, Salvatore Sanfilippo <antirez@gmail.com>
+ 2010-2011, Pieter Noordhuis <pcnoordhuis@gmail.com>
 License: BSD-3-Clause
 
-Files: net.h sds.*
+Files: sds.*
 Copyright: 2006-2010, Salvatore Sanfilippo <antirez@gmail.com>
 License: BSD-3-Clause
 
