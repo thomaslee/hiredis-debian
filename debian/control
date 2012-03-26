@@ -1,7 +1,9 @@
 Source: hiredis
 Priority: optional
 Maintainer: Alessandro Ghedini <al3xbio@gmail.com>
-Build-Depends: debhelper (>= 9), redis-server (>= 2:2.4.2-2), procps
+Build-Depends: debhelper (>= 9),
+ redis-server (>= 2:2.4.2-2) [!mipsel !armel !hurd-i386 !kfreebsd-any !s390 !sparc],
+ procps
 Standards-Version: 3.9.3
 Section: libs
 Homepage: https://github.com/antirez/hiredis

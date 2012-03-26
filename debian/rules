@@ -1,6 +1,8 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE=1
 
+REDIS=$(shell [ -e /usr/bin/redis-server ] && echo 1 || echo 0)
+
 %:
 	dh $@
 
@@ -11,7 +13,7 @@ override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
 
 override_dh_auto_test:
-ifneq ($(shell dpkg-architecture -qDEB_BUILD_ARCH),mipsel)
+ifeq ($(REDIS), 1)
 	redis-server ./debian/redis-test.conf
 	dh_auto_test
 	kill `cat /tmp/redis.pid`
