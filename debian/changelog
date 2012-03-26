@@ -1,3 +1,10 @@
+hiredis (0.10.1-6) unstable; urgency=low
+
+  * Do not run tests when redis-server is not available
+  * Make sure to honour CPPFLAGS too
+
+ -- Alessandro Ghedini <al3xbio@gmail.com>  Mon, 26 Mar 2012 20:38:39 +0200
+
 hiredis (0.10.1-5) unstable; urgency=low
 
   * Update debian/copyright format as in Debian Policy 3.9.3
