@@ -1,6 +1,6 @@
 Source: hiredis
 Priority: optional
-Maintainer: Alessandro Ghedini <al3xbio@gmail.com>
+Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Build-Depends: debhelper (>= 9),
  redis-server (>= 2:2.4.2-2) [!mipsel !armel !hurd-i386 !kfreebsd-any !s390 !sparc],
  procps
