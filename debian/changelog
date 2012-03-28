@@ -1,3 +1,9 @@
+hiredis (0.10.1-7) UNRELEASED; urgency=low
+
+  * Email change: Alessandro Ghedini -> ghedo@debian.org
+
+ -- Alessandro Ghedini <ghedo@debian.org>  Wed, 28 Mar 2012 12:29:48 +0200
+
 hiredis (0.10.1-6) unstable; urgency=low
 
   * Do not run tests when redis-server is not available
