@@ -28,3 +28,6 @@ ifeq ($(REDIS), 1)
 	$(RM) /tmp/redis.pid
 	$(RM) /tmp/redis.sock
 endif
+
+override_dh_strip:
+	dh_strip --dbg-package=libhiredis-dbg
