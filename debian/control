@@ -39,6 +39,7 @@ Package: libhiredis-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libhiredis0.10 (= ${binary:Version})
+Multi-Arch: same
 Description: minimalistic C client library for Redis (development files)
  Hiredis is a minimalistic C client library for the Redis database. It is
  minimalistic because it just adds minimal support for the protocol, but
