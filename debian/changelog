@@ -1,11 +1,11 @@
-hiredis (0.10.1-7) UNRELEASED; urgency=low
+hiredis (0.10.1-7) unstable; urgency=low
 
   * Email change: Alessandro Ghedini -> ghedo@debian.org
-  * Use Multi-Arch paths
-  * Add Multi-Arch headers
+  * Support Multi-Arch
   * Add -dbg package
+  * Always build depend on redis-server on linux
 
- -- Alessandro Ghedini <ghedo@debian.org>  Sat, 31 Mar 2012 19:57:21 +0200
+ -- Alessandro Ghedini <ghedo@debian.org>  Sun, 03 Jun 2012 14:39:59 +0200
 
 hiredis (0.10.1-6) unstable; urgency=low
 
