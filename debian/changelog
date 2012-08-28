@@ -1,8 +1,13 @@
-hiredis (0.11.0-1) UNRELEASED; urgency=low
+hiredis (0.11.0-1) unstable; urgency=low
 
   * New upstream release
+  * Refresh patches
+  * Add proper DEP3 headers to patches
+  * Update symbols file
+  * Fix typos in long descriptions
+  * Remove not-needed Replaces/Conflicts
 
- -- Alessandro Ghedini <ghedo@debian.org>  Tue, 28 Aug 2012 10:48:51 +0200
+ -- Alessandro Ghedini <ghedo@debian.org>  Tue, 28 Aug 2012 14:35:20 +0200
 
 hiredis (0.10.1-7) unstable; urgency=low
 
