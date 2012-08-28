@@ -8,12 +8,10 @@ because it is failing on some architectures (kfreebsd-* and hurd-i386).
  test.c |    4 ++--
  1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/test.c b/test.c
-index bac10a7..621307d 100644
 --- a/test.c
 +++ b/test.c
-@@ -271,11 +271,11 @@ static void test_blocking_connection_errors(void) {
-         strcmp(c->errstr,"Can't resolve: idontexist.local") == 0);
+@@ -289,11 +289,11 @@
+          strcmp(c->errstr,"Can't resolve: idontexist.local") == 0));
      redisFree(c);
  
 -    test("Returns error when the port is not open: ");
@@ -26,4 +24,3 @@ index bac10a7..621307d 100644
  
      test("Returns error when the unix socket path doesn't accept connections: ");
      c = redisConnectUnix((char*)"/tmp/idontexist.sock");
--- 

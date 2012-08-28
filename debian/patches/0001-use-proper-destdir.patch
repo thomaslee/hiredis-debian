@@ -7,11 +7,9 @@ Make the Makefile use the $(DESTDIR) variable
  Makefile |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 57f057e..e87e5a4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -104,7 +104,7 @@ dep:
+@@ -104,7 +104,7 @@
  	$(CC) -MM *.c
  
  # Installation related variables and target
@@ -20,4 +18,3 @@ index 57f057e..e87e5a4 100644
  INCLUDE_PATH?=include/hiredis
  LIBRARY_PATH?=lib
  INSTALL_INCLUDE_PATH= $(PREFIX)/$(INCLUDE_PATH)
--- 
