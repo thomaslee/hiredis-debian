@@ -12,8 +12,6 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/hiredis.git;a=summary
 
 Package: libhiredis0.10
 Architecture: any
-Replaces: libhiredis0
-Conflicts: libhiredis0
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
