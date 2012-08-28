@@ -16,6 +16,7 @@ libhiredis.so.0.10 libhiredis0.10 #MINVER#
  redisAsyncSetDisconnectCallback@Base 0.10.1
  redisBufferRead@Base 0.10.1
  redisBufferWrite@Base 0.10.1
+ redisCheckSocketError@Base 0.11.0
  redisCommand@Base 0.10.1
  redisCommandArgv@Base 0.10.1
  redisConnect@Base 0.10.1
