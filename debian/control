@@ -58,7 +58,7 @@ Description: minimalistic C client library for Redis (development files)
  The library comes with multiple APIs. There is the synchronous API, the
  asynchronous API and the reply parsing API.
  .
- This package provides the development file for libhiredis.
+ This package provides the development files for hiredis.
 
 Package: libhiredis-dbg
 Priority: extra
@@ -84,4 +84,4 @@ Description: minimalistic C client library for Redis (debug)
  The library comes with multiple APIs. There is the synchronous API, the
  asynchronous API and the reply parsing API.
  .
- This package provides the debugginf symbols for hiredis.
+ This package provides the debugging symbols for hiredis.
