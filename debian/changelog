@@ -1,3 +1,9 @@
+hiredis (0.11.0-2) UNRELEASED; urgency=low
+
+  * Bump Standards-Version to 3.9.4 (no changes needed)
+
+ -- Alessandro Ghedini <ghedo@debian.org>  Sun, 23 Sep 2012 18:58:31 +0200
+
 hiredis (0.11.0-1) unstable; urgency=low
 
   * New upstream release
