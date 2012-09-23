@@ -4,7 +4,7 @@ Maintainer: Alessandro Ghedini <ghedo@debian.org>
 Build-Depends: debhelper (>= 9),
  redis-server (>= 2:2.4.2-2) [linux-any],
  procps
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 Section: libs
 Homepage: https://github.com/antirez/hiredis
 Vcs-Git: git://git.debian.org/collab-maint/hiredis.git
