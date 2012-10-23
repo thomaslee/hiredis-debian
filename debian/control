@@ -1,6 +1,6 @@
 Source: hiredis
 Priority: optional
-Maintainer: Alessandro Ghedini <ghedo@debian.org>
+Maintainer: Tom Lee <debian@tomlee.co>
 Build-Depends: debhelper (>= 9),
  redis-server (>= 2:2.4.2-2) [linux-any],
  procps
