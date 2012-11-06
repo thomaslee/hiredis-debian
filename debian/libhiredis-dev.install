@@ -3,5 +3,6 @@
 echo usr/include/*
 echo usr/lib/*/lib*.a
 echo usr/lib/*/lib*.so
-echo debian/hiredis.pc usr/lib/$DEB_HOST_MULTIARCH/pkgconfig/
-echo debian/hiredis-config.cmake usr/share/cmake/hiredis/
+echo usr/lib/*/pkgconfig/*.pc
+echo usr/share/cmake-2.8/Modules/*.cmake
+
