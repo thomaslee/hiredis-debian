@@ -4,10 +4,8 @@ Forwarded: https://github.com/redis/hiredis/pull/129
 Author: Tom Lee <debian@tomlee.co>
 Last-Update: 2012-11-06
 
-Index: hiredis/FindHiredis.cmake
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ hiredis/FindHiredis.cmake	2012-11-06 00:07:57.935517001 -0800
+--- /dev/null
++++ b/FindHiredis.cmake
 @@ -0,0 +1,34 @@
 +# FindHiredis.cmake - Try to find the Hiredis library
 +# Once done this will define
@@ -43,11 +41,9 @@ Index: hiredis/FindHiredis.cmake
 +FIND_PACKAGE_HANDLE_STANDARD_ARGS(Hiredis DEFAULT_MSG HIREDIS_LIBRARIES HIREDIS_INCLUDE_DIR)
 +
 +MARK_AS_ADVANCED(HIREDIS_INCLUDE_DIR HIREDIS_LIBRARIES)
-Index: hiredis/Makefile
-===================================================================
---- hiredis.orig/Makefile	2012-11-06 00:07:52.703517001 -0800
-+++ hiredis/Makefile	2012-11-06 00:08:38.115517000 -0800
-@@ -98,17 +98,25 @@
+--- a/Makefile
++++ b/Makefile
+@@ -98,17 +98,23 @@
  	$(CC) -std=c99 -pedantic -c $(REAL_CFLAGS) $<
  
  clean:
@@ -62,19 +58,17 @@ Index: hiredis/Makefile
  PREFIX?=$(DESTDIR)/usr
  INCLUDE_PATH?=include/hiredis
  LIBRARY_PATH?=lib
++PKGCONFIG_PATH?=$(LIBRARY_PATH)/pkgconfig
++CMAKE_MODULES_PATH?=share/cmake/Modules
  INSTALL_INCLUDE_PATH= $(PREFIX)/$(INCLUDE_PATH)
  INSTALL_LIBRARY_PATH= $(PREFIX)/$(LIBRARY_PATH)
-+INSTALL_PKGCONFIG_PATH?= $(PREFIX)/$(LIBRARY_PATH)/pkgconfig
-+ifeq ($(CMAKE_ROOT),)
-+	INSTALL_CMAKE_MODULES_PATH?= $(PREFIX)/share/cmake/Modules
-+else
-+	INSTALL_CMAKE_MODULES_PATH?= $(CMAKE_ROOT)/Modules
-+endif
++INSTALL_PKGCONFIG_PATH= $(PREFIX)/$(PKGCONFIG_PATH)
++INSTALL_CMAKE_MODULES_PATH= $(PREFIX)/$(CMAKE_MODULES_PATH)
 +PKG_CONFIG_CFLAGS?= -D_FILE_OFFSET_BITS=64
  
  ifeq ($(uname_S),SunOS)
    INSTALL?= cp -r
-@@ -116,13 +124,24 @@
+@@ -116,13 +122,24 @@
  
  INSTALL?= cp -a
  
@@ -100,16 +94,14 @@ Index: hiredis/Makefile
  
  32bit:
  	@echo ""
-@@ -145,4 +164,4 @@
+@@ -145,4 +162,4 @@
  noopt:
  	$(MAKE) OPTIMIZATION=""
  
 -.PHONY: all test check clean dep install 32bit gprof gcov noopt
 +.PHONY: all test check clean dep install 32bit gprof gcov noopt hiredis.pc
-Index: hiredis/hiredis.pc.in
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ hiredis/hiredis.pc.in	2012-11-06 00:07:57.935517001 -0800
+--- /dev/null
++++ b/hiredis.pc.in
 @@ -0,0 +1,11 @@
 +prefix=@PREFIX@
 +exec_prefix=${prefix}
