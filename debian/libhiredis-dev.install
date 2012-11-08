@@ -1,8 +1,6 @@
-#!/bin/sh
-
-echo usr/include/*
-echo usr/lib/*/lib*.a
-echo usr/lib/*/lib*.so
-echo usr/lib/*/pkgconfig/*.pc
-echo usr/share/cmake-2.8/Modules/*.cmake
+usr/include/*
+usr/lib/*/lib*.a
+usr/lib/*/lib*.so
+usr/lib/*/pkgconfig/*.pc
+usr/share/cmake-2.8/Modules/*.cmake
 
