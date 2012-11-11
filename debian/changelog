@@ -1,8 +1,19 @@
-hiredis (0.11.0-2) UNRELEASED; urgency=low
+hiredis (0.11.0-2) unstable; urgency=low
 
+  [ Alessandro Ghedini ]
   * Bump Standards-Version to 3.9.4 (no changes needed)
+  * Update changelog
 
- -- Alessandro Ghedini <ghedo@debian.org>  Sun, 23 Sep 2012 18:58:31 +0200
+  [ Tom Lee ]
+  * New maintainer (Closes: #690707)
+  * Bump version in the pkg-config file
+  * Update debian/watch to point to new upstream URL
+  * Update debian/control to point to new upstream URL
+  * Update debian/copyright to point to new upstream URL
+  * Add pkg-config/cmake patch
+  * libhiredis-dev.install no longer needs +x
+
+ -- Tom Lee <debian@tomlee.co>  Sat, 10 Nov 2012 19:54:08 -0800
 
 hiredis (0.11.0-1) unstable; urgency=low
 
