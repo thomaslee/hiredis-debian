@@ -43,7 +43,7 @@ Last-Update: 2012-11-06
 +MARK_AS_ADVANCED(HIREDIS_INCLUDE_DIR HIREDIS_LIBRARIES)
 --- a/Makefile
 +++ b/Makefile
-@@ -98,17 +98,23 @@
+@@ -98,17 +98,25 @@
  	$(CC) -std=c99 -pedantic -c $(REAL_CFLAGS) $<
  
  clean:
@@ -54,21 +54,26 @@ Last-Update: 2012-11-06
  	$(CC) -MM *.c
  
  # Installation related variables and target
+-PREFIX?=$(DESTDIR)/usr
 +SED?=sed
- PREFIX?=$(DESTDIR)/usr
++INSTALL_PREFIX?=$(DESTDIR)/usr
++PREFIX?=$(INSTALL_PREFIX)
  INCLUDE_PATH?=include/hiredis
  LIBRARY_PATH?=lib
+-INSTALL_INCLUDE_PATH= $(PREFIX)/$(INCLUDE_PATH)
+-INSTALL_LIBRARY_PATH= $(PREFIX)/$(LIBRARY_PATH)
++LIB_PREFIX?=$(PREFIX)/$(LIBRARY_PATH)
 +PKGCONFIG_PATH?=$(LIBRARY_PATH)/pkgconfig
 +CMAKE_MODULES_PATH?=share/cmake/Modules
- INSTALL_INCLUDE_PATH= $(PREFIX)/$(INCLUDE_PATH)
- INSTALL_LIBRARY_PATH= $(PREFIX)/$(LIBRARY_PATH)
-+INSTALL_PKGCONFIG_PATH= $(PREFIX)/$(PKGCONFIG_PATH)
-+INSTALL_CMAKE_MODULES_PATH= $(PREFIX)/$(CMAKE_MODULES_PATH)
++INSTALL_INCLUDE_PATH= $(INSTALL_PREFIX)/$(INCLUDE_PATH)
++INSTALL_LIBRARY_PATH= $(INSTALL_PREFIX)/$(LIBRARY_PATH)
++INSTALL_PKGCONFIG_PATH= $(INSTALL_PREFIX)/$(PKGCONFIG_PATH)
++INSTALL_CMAKE_MODULES_PATH= $(INSTALL_PREFIX)/$(CMAKE_MODULES_PATH)
 +PKG_CONFIG_CFLAGS?= -D_FILE_OFFSET_BITS=64
  
  ifeq ($(uname_S),SunOS)
    INSTALL?= cp -r
-@@ -116,13 +122,24 @@
+@@ -116,13 +124,24 @@
  
  INSTALL?= cp -a
  
@@ -76,7 +81,7 @@ Last-Update: 2012-11-06
 +hiredis.pc: hiredis.pc.in
 +	test -d $(INSTALL_PKGCONFIG_PATH) && \
 +		$(SED) -e 's,@PREFIX@,$(PREFIX),g' \
-+				-e 's,@LIBRARY_PATH@,$(INSTALL_LIBRARY_PATH),g' \
++				-e 's,@LIB_PREFIX@,$(LIB_PREFIX),g' \
 +				-e 's,@CFLAGS@,$(PKG_CONFIG_CFLAGS),g' $< >$@ || true
 +
 +install: $(DYLIBNAME) $(STLIBNAME) hiredis.pc
@@ -94,7 +99,7 @@ Last-Update: 2012-11-06
  
  32bit:
  	@echo ""
-@@ -145,4 +162,4 @@
+@@ -145,4 +164,4 @@
  noopt:
  	$(MAKE) OPTIMIZATION=""
  
@@ -105,7 +110,7 @@ Last-Update: 2012-11-06
 @@ -0,0 +1,11 @@
 +prefix=@PREFIX@
 +exec_prefix=${prefix}
-+libdir=@LIBRARY_PATH@
++libdir=@LIB_PREFIX@
 +includedir=${prefix}/include
 +
 +Name: Hiredis
