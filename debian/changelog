@@ -1,8 +1,8 @@
 hiredis (0.11.0-3) unstable; urgency=low
 
-  * Fix incorrect --cflags & --libs in pkg-config file
+  * Fix incorrect --cflags & --libs in pkg-config file (closes: #717611)
 
- -- Tom Lee <debian@tomlee.co>  Wed, 31 Jul 2013 23:23:45 -0700
+ -- Tom Lee <debian@tomlee.co>  Sun, 11 Aug 2013 11:48:39 -0700
 
 hiredis (0.11.0-2) unstable; urgency=low
 
