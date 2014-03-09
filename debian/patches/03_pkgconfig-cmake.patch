@@ -117,5 +117,5 @@ Last-Update: 2012-11-06
 +Description: Minimalistic C client library for the Redis database.
 +Version: 0.11.0
 +Libs: -L${libdir} -lhiredis
-+Cflags: -I${includedir} @CFLAGS@
++Cflags: -I${includedir}/hiredis @CFLAGS@
 +
