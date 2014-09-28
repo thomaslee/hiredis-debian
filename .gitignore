@@ -4,3 +4,15 @@
 /*.so
 /*.dylib
 /*.a
+*.swp
+/debian/files
+/debian/libhiredis*.debhelper.log
+/debian/libhiredis-dbg
+/debian/libhiredis-dev
+/debian/libhiredis0.10
+/hiredis.pc
+/debian/tmp
+*.substvars
+*.postinst.debhelper
+*.postrm.debhelper
+
