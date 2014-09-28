@@ -1,4 +1,4 @@
-hiredis (0.11.0-4) UNRELEASED; urgency=medium
+hiredis (0.11.0-4) unstable; urgency=medium
 
   * Symlinks for cmake 3.0 (closes: #758548)
 
