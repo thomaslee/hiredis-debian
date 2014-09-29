@@ -21,9 +21,6 @@ override_dh_auto_install:
 	dh_auto_install -- LIBRARY_PATH="lib/$(DEB_HOST_MULTIARCH)" \
 		CMAKE_MODULES_PATH="share/cmake-2.8/Modules" \
 		PREFIX=/usr
-	mkdir -p "$(DEB_DESTDIR)/usr/share/cmake-3.0/Modules"
-	ln -s "$(DEB_DESTDIR)/usr/share/cmake-2.8/Modules" \
-			"$(DEB_DESTDIR)/usr/share/cmake-3.0/Modules"
 
 override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
