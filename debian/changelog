@@ -1,6 +1,7 @@
 hiredis (0.11.0-4) unstable; urgency=medium
 
   * Symlinks for cmake 3.0 (closes: #758548)
+  * Bump Standards-Version to 3.9.5 (no changes needed)
 
  -- Tom Lee <debian@tomlee.co>  Sun, 28 Sep 2014 14:08:37 -0700
 
