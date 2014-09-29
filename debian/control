@@ -4,7 +4,7 @@ Maintainer: Tom Lee <debian@tomlee.co>
 Build-Depends: debhelper (>= 9),
  redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any],
  procps
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/redis/hiredis
 Vcs-Git: git://git.debian.org/collab-maint/hiredis.git
