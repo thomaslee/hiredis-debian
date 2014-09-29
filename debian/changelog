@@ -1,6 +1,8 @@
 hiredis (0.11.0-4) unstable; urgency=medium
 
   * Symlinks for cmake 3.0 (closes: #758548)
+  * Fix bad include path in hiredis.pc (closes: #739834)
+  * Allow tests to run on kfreebsd
   * Update Vcs-Browser and Vcs-Git to fix vcs-field-not-canonical
   * Bump Standards-Version to 3.9.5 (no changes needed)
 
