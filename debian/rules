@@ -27,11 +27,7 @@ override_dh_installchangelogs:
 
 override_dh_auto_test:
 ifeq ($(REDIS), 1)
-	redis-server ./debian/redis-test.conf
-	dh_auto_test
-	kill `cat /tmp/redis.pid`
-	$(RM) /tmp/redis.pid
-	$(RM) /tmp/redis.sock
+	make check
 endif
 
 override_dh_strip:
