@@ -26,8 +26,10 @@ override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
 
 override_dh_auto_test:
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
 ifeq ($(REDIS), 1)
 	make check
+endif
 endif
 
 override_dh_strip:
