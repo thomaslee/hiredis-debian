@@ -1,3 +1,4 @@
 01_use-proper-destdir.patch
 02_disable-failing-test.patch
 03_pkgconfig-cmake.patch
+04_disable-network-tests.patch
