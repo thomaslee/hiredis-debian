@@ -1,6 +1,6 @@
 hiredis (0.11.0-5) unstable; urgency=medium
 
-  * Don't run network tests (closes: #770648)
+  * Disable a network test failing in pbuilder (closes: #770648)
   * Honor DEB_BUILD_OPTIONS=nocheck
 
  -- Tom Lee <debian@tomlee.co>  Mon, 24 Nov 2014 00:17:31 -0800

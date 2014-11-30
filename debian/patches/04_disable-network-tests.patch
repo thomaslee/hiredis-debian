@@ -1,14 +1,12 @@
-Description: Disable network-based tests
- As on the buildds no network is available, this patch disables the tests
- which are expect are working network
+Description: Disable "Returns error when host cannot be resolved"
+ This patch disables a test that relies on the presence of a
+ network connection.
 Author: Tobias Frost <tobi@debian.org>
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
-Index: hiredis-0.11.0/test.c
-===================================================================
---- hiredis-0.11.0.orig/test.c
-+++ hiredis-0.11.0/test.c
-@@ -282,12 +282,16 @@ static void test_reply_reader(void) {
+--- a/test.c
++++ b/test.c
+@@ -282,12 +282,16 @@
  static void test_blocking_connection_errors(void) {
      redisContext *c;
  
@@ -25,19 +23,3 @@ Index: hiredis-0.11.0/test.c
  
      /*test("Returns error when the port is not open: ");
      c = redisConnect((char*)"localhost", 1);
-@@ -634,11 +638,15 @@ int main(int argc, char **argv) {
-     test_reply_reader();
-     test_blocking_connection_errors();
- 
-+#if 0
-     printf("\nTesting against TCP connection (%s:%d):\n", cfg.tcp.host, cfg.tcp.port);
-     cfg.type = CONN_TCP;
-     test_blocking_connection(cfg);
-     test_blocking_io_errors(cfg);
-     if (throughput) test_throughput(cfg);
-+#else
-+   printf("\nSKIPPED: Testing against TCP connection\n");
-+#endif 
- 
-     printf("\nTesting against Unix socket connection (%s):\n", cfg.unix.path);
-     cfg.type = CONN_UNIX;
