@@ -43,63 +43,52 @@ Last-Update: 2012-11-06
 +MARK_AS_ADVANCED(HIREDIS_INCLUDE_DIR HIREDIS_LIBRARIES)
 --- a/Makefile
 +++ b/Makefile
-@@ -98,17 +98,25 @@
- 	$(CC) -std=c99 -pedantic -c $(REAL_CFLAGS) $<
+@@ -8,19 +8,23 @@
+ TESTS=hiredis-test
+ LIBNAME=libhiredis
+ PKGCONFNAME=hiredis.pc
++CMAKENAME=FindHiredis.cmake
  
- clean:
--	rm -rf $(DYLIBNAME) $(STLIBNAME) $(BINS) hiredis-example* *.o *.gcda *.gcno *.gcov
-+	rm -rf $(DYLIBNAME) $(STLIBNAME) $(BINS) hiredis-example* *.o *.gcda *.gcno *.gcov hiredis.pc
- 
- dep:
- 	$(CC) -MM *.c
+ HIREDIS_MAJOR=$(shell grep HIREDIS_MAJOR hiredis.h | awk '{print $$3}')
+ HIREDIS_MINOR=$(shell grep HIREDIS_MINOR hiredis.h | awk '{print $$3}')
+ HIREDIS_PATCH=$(shell grep HIREDIS_PATCH hiredis.h | awk '{print $$3}')
  
  # Installation related variables and target
 -PREFIX?=$(DESTDIR)/usr
-+SED?=sed
 +INSTALL_PREFIX?=$(DESTDIR)/usr
 +PREFIX?=$(INSTALL_PREFIX)
  INCLUDE_PATH?=include/hiredis
  LIBRARY_PATH?=lib
--INSTALL_INCLUDE_PATH= $(PREFIX)/$(INCLUDE_PATH)
--INSTALL_LIBRARY_PATH= $(PREFIX)/$(LIBRARY_PATH)
-+LIB_PREFIX?=$(PREFIX)/$(LIBRARY_PATH)
-+PKGCONFIG_PATH?=$(LIBRARY_PATH)/pkgconfig
+ PKGCONF_PATH?=pkgconfig
+-INSTALL_INCLUDE_PATH= $(DESTDIR)$(PREFIX)/$(INCLUDE_PATH)
+-INSTALL_LIBRARY_PATH= $(DESTDIR)$(PREFIX)/$(LIBRARY_PATH)
 +CMAKE_MODULES_PATH?=share/cmake/Modules
 +INSTALL_INCLUDE_PATH= $(INSTALL_PREFIX)/$(INCLUDE_PATH)
 +INSTALL_LIBRARY_PATH= $(INSTALL_PREFIX)/$(LIBRARY_PATH)
-+INSTALL_PKGCONFIG_PATH= $(INSTALL_PREFIX)/$(PKGCONFIG_PATH)
-+INSTALL_CMAKE_MODULES_PATH= $(INSTALL_PREFIX)/$(CMAKE_MODULES_PATH)
-+PKG_CONFIG_CFLAGS?= -D_FILE_OFFSET_BITS=64
+ INSTALL_PKGCONF_PATH= $(INSTALL_LIBRARY_PATH)/$(PKGCONF_PATH)
++INSTALL_CMAKE_PATH= $(INSTALL_PREFIX)/$(CMAKE_MODULES_PATH)
  
- ifeq ($(uname_S),SunOS)
-   INSTALL?= cp -r
-@@ -116,13 +124,24 @@
+ # redis-server configuration used for testing
+ REDIS_PORT=56379
+@@ -160,7 +164,7 @@
+ 	@echo Libs: -L\$${libdir} -lhiredis >> $@
+ 	@echo Cflags: -I\$${includedir} -D_FILE_OFFSET_BITS=64 >> $@
  
- INSTALL?= cp -a
- 
--install: $(DYLIBNAME) $(STLIBNAME)
-+hiredis.pc: hiredis.pc.in
-+	test -d $(INSTALL_PKGCONFIG_PATH) && \
-+		$(SED) -e 's,@PREFIX@,$(PREFIX),g' \
-+				-e 's,@LIB_PREFIX@,$(LIB_PREFIX),g' \
-+				-e 's,@CFLAGS@,$(PKG_CONFIG_CFLAGS),g' $< >$@ || true
-+
-+install: $(DYLIBNAME) $(STLIBNAME) hiredis.pc
+-install: $(DYLIBNAME) $(STLIBNAME) $(PKGCONFNAME)
++install: $(DYLIBNAME) $(STLIBNAME) $(PKGCONFNAME) $(CMAKENAME)
  	mkdir -p $(INSTALL_INCLUDE_PATH) $(INSTALL_LIBRARY_PATH)
- 	$(INSTALL) hiredis.h async.h adapters $(INSTALL_INCLUDE_PATH)
+ 	$(INSTALL) hiredis.h async.h read.h sds.h adapters $(INSTALL_INCLUDE_PATH)
  	$(INSTALL) $(DYLIBNAME) $(INSTALL_LIBRARY_PATH)/$(DYLIB_MINOR_NAME)
- 	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MINOR_NAME) $(DYLIB_MAJOR_NAME)
- 	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MAJOR_NAME) $(DYLIBNAME)
+@@ -169,6 +173,8 @@
  	$(INSTALL) $(STLIBNAME) $(INSTALL_LIBRARY_PATH)
-+	test -f hiredis.pc && \
-+	test -d $(INSTALL_PKGCONFIG_PATH) && \
-+		$(INSTALL) hiredis.pc $(INSTALL_PKGCONFIG_PATH) && \
-+	test -d "$(INSTALL_CMAKE_MODULES_PATH)" && \
-+		$(INSTALL) FindHiredis.cmake $(INSTALL_CMAKE_MODULES_PATH) || true
+ 	mkdir -p $(INSTALL_PKGCONF_PATH)
+ 	$(INSTALL) $(PKGCONFNAME) $(INSTALL_PKGCONF_PATH)
++	mkdir -p $(INSTALL_CMAKE_PATH)
++	$(INSTALL) $(CMAKENAME) $(INSTALL_CMAKE_PATH)
  
  32bit:
  	@echo ""
-@@ -145,4 +164,4 @@
+@@ -195,4 +201,4 @@
  noopt:
  	$(MAKE) OPTIMIZATION=""
  

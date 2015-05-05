@@ -8,8 +8,8 @@ Last-Update: 2012-08-28
 
 --- a/test.c
 +++ b/test.c
-@@ -289,11 +289,11 @@
-          strcmp(c->errstr,"Can't resolve: idontexist.local") == 0));
+@@ -354,11 +354,11 @@
+          strcmp(c->errstr,"no address associated with name") == 0));
      redisFree(c);
  
 -    test("Returns error when the port is not open: ");
