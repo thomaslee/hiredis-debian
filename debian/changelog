@@ -1,8 +1,13 @@
-hiredis (0.11.0-5) unstable; urgency=medium
+hiredis (0.13.1-1) unstable; urgency=low
 
+  * Import Upstream release 0.13.1
+  * Refresh patches
+  * Bump Standards Version to 3.9.6
+  * More conventional naming scheme for shared libraries
+  * Remove symlink for cmake-2.8 module
   * Disable a network test failing in pbuilder (closes: #770648)
 
- -- Tom Lee <debian@tomlee.co>  Mon, 24 Nov 2014 00:17:31 -0800
+ -- Tom Lee <debian@tomlee.co>  Mon, 04 May 2015 23:57:23 -0700
 
 hiredis (0.11.0-4) unstable; urgency=medium
 
