@@ -1,4 +1,4 @@
-libhiredis.so.0.13 libhiredis0.10 #MINVER#
+libhiredis.so.0.13 libhiredis0.13 #MINVER#
  __redisAppendCommand@Base 0.13.1
  __redisSetError@Base 0.13.1
  freeReplyObject@Base 0.13.1

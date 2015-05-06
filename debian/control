@@ -10,7 +10,7 @@ Homepage: https://github.com/redis/hiredis
 Vcs-Git: git://anonscm.debian.org/collab-maint/hiredis.git
 Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/hiredis.git/
 
-Package: libhiredis0.10
+Package: libhiredis0.13
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
@@ -36,7 +36,7 @@ Description: minimalistic C client library for Redis
 Package: libhiredis-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, libhiredis0.10 (= ${binary:Version})
+Depends: ${misc:Depends}, libhiredis0.13 (= ${binary:Version})
 Multi-Arch: same
 Description: minimalistic C client library for Redis (development files)
  Hiredis is a minimalistic C client library for the Redis database. It is
@@ -62,7 +62,7 @@ Package: libhiredis-dbg
 Priority: extra
 Section: debug
 Architecture: any
-Depends: ${misc:Depends}, libhiredis0.10 (= ${binary:Version})
+Depends: ${misc:Depends}, libhiredis0.13 (= ${binary:Version})
 Multi-Arch: same
 Description: minimalistic C client library for Redis (debug)
  Hiredis is a minimalistic C client library for the Redis database. It is
