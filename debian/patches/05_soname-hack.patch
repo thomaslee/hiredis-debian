@@ -6,7 +6,16 @@ Author: Tom Lee <debian@tomlee.co>
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/Makefile
 +++ b/Makefile
-@@ -48,10 +48,10 @@
+@@ -14,6 +14,8 @@
+ HIREDIS_MINOR=$(shell grep HIREDIS_MINOR hiredis.h | awk '{print $$3}')
+ HIREDIS_PATCH=$(shell grep HIREDIS_PATCH hiredis.h | awk '{print $$3}')
+ 
++SONAME=0.13
++
+ # Installation related variables and target
+ INSTALL_PREFIX?=$(DESTDIR)/usr
+ PREFIX?=$(INSTALL_PREFIX)
+@@ -48,10 +50,9 @@
  
  DYLIBSUFFIX=so
  STLIBSUFFIX=a
@@ -14,19 +23,18 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -DYLIB_MAJOR_NAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_MAJOR)
 -DYLIBNAME=$(LIBNAME).$(DYLIBSUFFIX)
 -DYLIB_MAKE_CMD=$(CC) -shared -Wl,-soname,$(DYLIB_MINOR_NAME) -o $(DYLIBNAME) $(LDFLAGS)
-+DYLIBSONAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_MAJOR).$(HIREDIS_MINOR)
-+DYLIBREALNAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_MAJOR).$(HIREDIS_MINOR).$(HIREDIS_PATCH)
++DYLIBSONAME=$(LIBNAME).$(DYLIBSUFFIX).$(SONAME)
 +DYLIBLINKERNAME=$(LIBNAME).$(DYLIBSUFFIX)
-+DYLIB_MAKE_CMD=$(CC) -shared -Wl,-soname,$(DYLIBSONAME) -o $(DYLIBREALNAME) $(LDFLAGS)
++DYLIB_MAKE_CMD=$(CC) -shared -Wl,-soname,$(DYLIBSONAME) -o $(DYLIBSONAME) $(LDFLAGS)
  STLIBNAME=$(LIBNAME).$(STLIBSUFFIX)
  STLIB_MAKE_CMD=ar rcs $(STLIBNAME)
  
-@@ -59,17 +59,16 @@
+@@ -59,17 +60,16 @@
  uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
  ifeq ($(uname_S),SunOS)
    REAL_LDFLAGS+= -ldl -lnsl -lsocket
 -  DYLIB_MAKE_CMD=$(CC) -G -o $(DYLIBNAME) -h $(DYLIB_MINOR_NAME) $(LDFLAGS)
-+  DYLIB_MAKE_CMD=$(CC) -G -o $(DYLIBREALNAME) -h $(DYLIBSONAME) $(LDFLAGS)
++  DYLIB_MAKE_CMD=$(CC) -G -o $(DYLIBSONAME) -h $(DYLIBSONAME) $(LDFLAGS)
    INSTALL= cp -r
  endif
  ifeq ($(uname_S),Darwin)
@@ -35,53 +43,52 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -  DYLIB_MAJOR_NAME=$(LIBNAME).$(HIREDIS_MAJOR).$(DYLIBSUFFIX)
 -  DYLIB_MAKE_CMD=$(CC) -shared -Wl,-install_name,$(DYLIB_MINOR_NAME) -o $(DYLIBNAME) $(LDFLAGS)
 +  DYLIBSONAME=$(LIBNAME).$(HIREDIS_MAJOR).$(HIREDIS_MINOR).$(DYLIBSUFFIX)
-+  DYLIB_MAKE_CMD=$(CC) -shared -Wl,-install_name,$(DYLIBSONAME) -o $(DYLIBREALNAME) $(LDFLAGS)
++  DYLIB_MAKE_CMD=$(CC) -shared -Wl,-install_name,$(DYLIBSONAME) -o $(DYLIBSONAME) $(LDFLAGS)
  endif
  
 -all: $(DYLIBNAME) $(STLIBNAME) hiredis-test $(PKGCONFNAME)
-+all: $(DYLIBREALNAME) $(STLIBNAME) hiredis-test $(PKGCONFNAME)
++all: $(DYLIBSONAME) $(STLIBNAME) hiredis-test $(PKGCONFNAME)
  
  # Deps (use make dep to generate this)
  async.o: async.c fmacros.h async.h hiredis.h read.h sds.h net.h dict.c dict.h
-@@ -80,13 +79,13 @@
+@@ -80,13 +80,13 @@
  sds.o: sds.c sds.h
  test.o: test.c fmacros.h hiredis.h read.h sds.h
  
 -$(DYLIBNAME): $(OBJ)
-+$(DYLIBREALNAME): $(OBJ)
++$(DYLIBSONAME): $(OBJ)
  	$(DYLIB_MAKE_CMD) $(OBJ)
  
  $(STLIBNAME): $(OBJ)
  	$(STLIB_MAKE_CMD) $(OBJ)
  
 -dynamic: $(DYLIBNAME)
-+dynamic: $(DYLIBREALNAME)
++dynamic: $(DYLIBSONAME)
  static: $(STLIBNAME)
  
  # Binaries:
-@@ -140,7 +139,7 @@
+@@ -140,7 +140,7 @@
  	$(CC) -std=c99 -pedantic -c $(REAL_CFLAGS) $<
  
  clean:
 -	rm -rf $(DYLIBNAME) $(STLIBNAME) $(TESTS) $(PKGCONFNAME) examples/hiredis-example* *.o *.gcda *.gcno *.gcov
-+	rm -rf $(DYLIBREALNAME) $(STLIBNAME) $(TESTS) $(PKGCONFNAME) examples/hiredis-example* *.o *.gcda *.gcno *.gcov
++	rm -rf $(DYLIBSONAME) $(STLIBNAME) $(TESTS) $(PKGCONFNAME) examples/hiredis-example* *.o *.gcda *.gcno *.gcov
  
  dep:
  	$(CC) -MM *.c
-@@ -164,12 +163,12 @@
+@@ -164,12 +164,11 @@
  	@echo Libs: -L\$${libdir} -lhiredis >> $@
  	@echo Cflags: -I\$${includedir} -D_FILE_OFFSET_BITS=64 >> $@
  
 -install: $(DYLIBNAME) $(STLIBNAME) $(PKGCONFNAME) $(CMAKENAME)
-+install: $(DYLIBREALNAME) $(STLIBNAME) $(PKGCONFNAME) $(CMAKENAME)
++install: $(DYLIBSONAME) $(STLIBNAME) $(PKGCONFNAME) $(CMAKENAME)
  	mkdir -p $(INSTALL_INCLUDE_PATH) $(INSTALL_LIBRARY_PATH)
  	$(INSTALL) hiredis.h async.h read.h sds.h adapters $(INSTALL_INCLUDE_PATH)
 -	$(INSTALL) $(DYLIBNAME) $(INSTALL_LIBRARY_PATH)/$(DYLIB_MINOR_NAME)
 -	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MINOR_NAME) $(DYLIB_MAJOR_NAME)
 -	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MAJOR_NAME) $(DYLIBNAME)
-+	$(INSTALL) $(DYLIBREALNAME) $(INSTALL_LIBRARY_PATH)/$(DYLIBREALNAME)
-+	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIBREALNAME) $(DYLIBSONAME)
-+	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIBREALNAME) $(DYLIBLINKERNAME)
++	$(INSTALL) $(DYLIBSONAME) $(INSTALL_LIBRARY_PATH)/$(DYLIBSONAME)
++	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIBSONAME) $(DYLIBLINKERNAME)
  	$(INSTALL) $(STLIBNAME) $(INSTALL_LIBRARY_PATH)
  	mkdir -p $(INSTALL_PKGCONF_PATH)
  	$(INSTALL) $(PKGCONFNAME) $(INSTALL_PKGCONF_PATH)
