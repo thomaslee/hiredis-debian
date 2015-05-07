@@ -13,7 +13,7 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@
 
 override_dh_auto_build:
-	dh_auto_build -- DEBUG="-g" CFLAGS="$(CFLAGS)"
+	dh_auto_build -- DEBUG="-g" CFLAGS="$(CFLAGS)" ARCH=
 
 override_dh_auto_install:
 	mkdir -p "$(DEB_DESTDIR)/usr/share/cmake-3.0/Modules"
