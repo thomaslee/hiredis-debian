@@ -1,4 +1,4 @@
-hiredis (0.13.1-1) unstable; urgency=medium
+hiredis (0.13.1-1) experimental; urgency=medium
 
   * Disable network test broken in pbuilder
     Thanks to Tobias Frost for the patch (closes: #770648)
