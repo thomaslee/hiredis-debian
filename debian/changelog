@@ -1,3 +1,9 @@
+hiredis (0.13.1-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Tom Lee <debian@tomlee.co>  Fri, 12 Jun 2015 08:46:56 -0700
+
 hiredis (0.13.1-1) experimental; urgency=medium
 
   * Disable network test broken in pbuilder
