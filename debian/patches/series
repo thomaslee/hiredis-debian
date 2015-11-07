@@ -2,3 +2,4 @@
 02_disable-failing-test.patch
 04_disable-network-tests.patch
 06_redis-startup.patch
+07_cmake.patch
