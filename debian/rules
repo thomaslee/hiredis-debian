@@ -16,10 +16,7 @@ override_dh_auto_build:
 	dh_auto_build -- DEBUG="-g" CFLAGS="$(CFLAGS)" ARCH=
 
 override_dh_auto_install:
-	mkdir -p "$(DEB_DESTDIR)/usr/share/cmake-3.0/Modules"
-	mkdir -p "$(DEB_DESTDIR)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig"
 	dh_auto_install -- LIBRARY_PATH="lib/$(DEB_HOST_MULTIARCH)" \
-		CMAKE_MODULES_PATH="share/cmake-3.0/Modules" \
 		PREFIX=/usr
 
 override_dh_installchangelogs:
