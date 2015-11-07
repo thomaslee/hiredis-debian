@@ -12,6 +12,7 @@ PKGCONFNAME=hiredis.pc
 HIREDIS_MAJOR=$(shell grep HIREDIS_MAJOR hiredis.h | awk '{print $$3}')
 HIREDIS_MINOR=$(shell grep HIREDIS_MINOR hiredis.h | awk '{print $$3}')
 HIREDIS_PATCH=$(shell grep HIREDIS_PATCH hiredis.h | awk '{print $$3}')
+HIREDIS_SONAME=$(shell grep HIREDIS_SONAME hiredis.h | awk '{print $$3}')
 
 # Installation related variables and target
 PREFIX?=/usr/local
@@ -36,6 +37,7 @@ export REDIS_TEST_CONFIG
 
 # Fallback to gcc when $CC is not in $PATH.
 CC:=$(shell sh -c 'type $(CC) >/dev/null 2>/dev/null && echo $(CC) || echo gcc')
+CXX:=$(shell sh -c 'type $(CXX) >/dev/null 2>/dev/null && echo $(CXX) || echo g++')
 OPTIMIZATION?=-O3
 WARNINGS=-Wall -W -Wstrict-prototypes -Wwrite-strings
 DEBUG?= -g -ggdb
@@ -44,7 +46,7 @@ REAL_LDFLAGS=$(LDFLAGS) $(ARCH)
 
 DYLIBSUFFIX=so
 STLIBSUFFIX=a
-DYLIB_MINOR_NAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_MAJOR).$(HIREDIS_MINOR)
+DYLIB_MINOR_NAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_SONAME)
 DYLIB_MAJOR_NAME=$(LIBNAME).$(DYLIBSUFFIX).$(HIREDIS_MAJOR)
 DYLIBNAME=$(LIBNAME).$(DYLIBSUFFIX)
 DYLIB_MAKE_CMD=$(CC) -shared -Wl,-soname,$(DYLIB_MINOR_NAME) -o $(DYLIBNAME) $(LDFLAGS)
@@ -60,8 +62,7 @@ ifeq ($(uname_S),SunOS)
 endif
 ifeq ($(uname_S),Darwin)
   DYLIBSUFFIX=dylib
-  DYLIB_MINOR_NAME=$(LIBNAME).$(HIREDIS_MAJOR).$(HIREDIS_MINOR).$(DYLIBSUFFIX)
-  DYLIB_MAJOR_NAME=$(LIBNAME).$(HIREDIS_MAJOR).$(DYLIBSUFFIX)
+  DYLIB_MINOR_NAME=$(LIBNAME).$(HIREDIS_SONAME).$(DYLIBSUFFIX)
   DYLIB_MAKE_CMD=$(CC) -shared -Wl,-install_name,$(DYLIB_MINOR_NAME) -o $(DYLIBNAME) $(LDFLAGS)
 endif
 
@@ -95,6 +96,12 @@ hiredis-example-libev: examples/example-libev.c adapters/libev.h $(STLIBNAME)
 hiredis-example-glib: examples/example-glib.c adapters/glib.h $(STLIBNAME)
 	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) $(shell pkg-config --cflags --libs glib-2.0) -I. $< $(STLIBNAME)
 
+hiredis-example-ivykis: examples/example-ivykis.c adapters/ivykis.h $(STLIBNAME)
+	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. $< -livykis $(STLIBNAME)
+
+hiredis-example-macosx: examples/example-macosx.c adapters/macosx.h $(STLIBNAME)
+	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. $< -framework CoreFoundation $(STLIBNAME)
+
 ifndef AE_DIR
 hiredis-example-ae:
 	@echo "Please specify AE_DIR (e.g. <redis repository>/src)"
@@ -110,7 +117,20 @@ hiredis-example-libuv:
 	@false
 else
 hiredis-example-libuv: examples/example-libuv.c adapters/libuv.h $(STLIBNAME)
-	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. -I$(LIBUV_DIR)/include $< $(LIBUV_DIR)/.libs/libuv.a -lpthread $(STLIBNAME)
+	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. -I$(LIBUV_DIR)/include $< $(LIBUV_DIR)/.libs/libuv.a -lpthread -lrt $(STLIBNAME)
+endif
+
+ifeq ($(and $(QT_MOC),$(QT_INCLUDE_DIR),$(QT_LIBRARY_DIR)),)
+hiredis-example-qt:
+	@echo "Please specify QT_MOC, QT_INCLUDE_DIR AND QT_LIBRARY_DIR"
+	@false
+else
+hiredis-example-qt: examples/example-qt.cpp adapters/qt.h $(STLIBNAME)
+	$(QT_MOC) adapters/qt.h -I. -I$(QT_INCLUDE_DIR) -I$(QT_INCLUDE_DIR)/QtCore | \
+	    $(CXX) -x c++ -o qt-adapter-moc.o -c - $(REAL_CFLAGS) -I. -I$(QT_INCLUDE_DIR) -I$(QT_INCLUDE_DIR)/QtCore
+	$(QT_MOC) examples/example-qt.h -I. -I$(QT_INCLUDE_DIR) -I$(QT_INCLUDE_DIR)/QtCore | \
+	    $(CXX) -x c++ -o qt-example-moc.o -c - $(REAL_CFLAGS) -I. -I$(QT_INCLUDE_DIR) -I$(QT_INCLUDE_DIR)/QtCore
+	$(CXX) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. -I$(QT_INCLUDE_DIR) -I$(QT_INCLUDE_DIR)/QtCore -L$(QT_LIBRARY_DIR) qt-adapter-moc.o qt-example-moc.o $< -pthread $(STLIBNAME) -lQtCore
 endif
 
 hiredis-example: examples/example.c $(STLIBNAME)
@@ -164,8 +184,7 @@ install: $(DYLIBNAME) $(STLIBNAME) $(PKGCONFNAME)
 	mkdir -p $(INSTALL_INCLUDE_PATH) $(INSTALL_LIBRARY_PATH)
 	$(INSTALL) hiredis.h async.h read.h sds.h adapters $(INSTALL_INCLUDE_PATH)
 	$(INSTALL) $(DYLIBNAME) $(INSTALL_LIBRARY_PATH)/$(DYLIB_MINOR_NAME)
-	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MINOR_NAME) $(DYLIB_MAJOR_NAME)
-	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MAJOR_NAME) $(DYLIBNAME)
+	cd $(INSTALL_LIBRARY_PATH) && ln -sf $(DYLIB_MINOR_NAME) $(DYLIBNAME)
 	$(INSTALL) $(STLIBNAME) $(INSTALL_LIBRARY_PATH)
 	mkdir -p $(INSTALL_PKGCONF_PATH)
 	$(INSTALL) $(PKGCONFNAME) $(INSTALL_PKGCONF_PATH)
@@ -195,4 +214,4 @@ coverage: gcov
 noopt:
 	$(MAKE) OPTIMIZATION=""
 
-.PHONY: all test check clean dep install 32bit gprof gcov noopt
+.PHONY: all test check clean dep install 32bit 32bit-vars gprof gcov noopt
