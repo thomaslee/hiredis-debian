@@ -8,7 +8,7 @@ Last-Update: 2012-08-28
 
 --- a/test.c
 +++ b/test.c
-@@ -354,11 +354,11 @@
+@@ -355,11 +355,11 @@
           strcmp(c->errstr,"no address associated with name") == 0));
      redisFree(c);
  

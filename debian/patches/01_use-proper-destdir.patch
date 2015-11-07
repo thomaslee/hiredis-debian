@@ -6,8 +6,8 @@ Last-Update: 2012-08-28
 
 --- a/Makefile
 +++ b/Makefile
-@@ -14,7 +14,7 @@
- HIREDIS_PATCH=$(shell grep HIREDIS_PATCH hiredis.h | awk '{print $$3}')
+@@ -15,7 +15,7 @@
+ HIREDIS_SONAME=$(shell grep HIREDIS_SONAME hiredis.h | awk '{print $$3}')
  
  # Installation related variables and target
 -PREFIX?=/usr/local
