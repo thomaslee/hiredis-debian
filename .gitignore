@@ -5,3 +5,13 @@
 /*.dylib
 /*.a
 /*.pc
+*.log
+*.cmake
+/debian/.debhelper
+/debian/files
+/debian/*.substvars
+/debian/*-dev
+/debian/*-dbg
+/debian/libhiredis0.13
+/debian/tmp
+
