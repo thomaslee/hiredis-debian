@@ -4,7 +4,7 @@ Description: Fix potential race in "invalid timeout" tests
  We prefer to fail early rather than risk unpredictable behavior.
 Author: Tom Lee <debian@tomlee.co>
 Origin: vendor
-Forwarded: no
+Forwarded: https://github.com/redis/hiredis/pull/379
 Last-Update: 2015-11-17
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
