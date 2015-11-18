@@ -4,3 +4,4 @@
 06_redis-startup.patch
 07_cmake.patch
 08_kfreebsd_ftbfs.patch
+09_fix_test_race.patch
