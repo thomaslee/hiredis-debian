@@ -1,3 +1,12 @@
+hiredis (0.13.3-2) unstable; urgency=medium
+
+  * Ignore /tags
+  * Fix kfreebsd FTBFS (closes #792404)
+  * Fix potential race in "invalid timeout" tests
+  * DEP-3 headers and forwarding patches uptsream
+
+ -- Tom Lee <debian@tomlee.co>  Wed, 18 Nov 2015 00:47:58 -0800
+
 hiredis (0.13.3-1) unstable; urgency=medium
 
   * Imported Upstream version 0.13.3
