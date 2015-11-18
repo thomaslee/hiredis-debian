@@ -3,3 +3,4 @@
 04_disable-network-tests.patch
 06_redis-startup.patch
 07_cmake.patch
+08_kfreebsd_ftbfs.patch
