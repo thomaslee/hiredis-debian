@@ -21,7 +21,7 @@
  
  # redis-server configuration used for testing
  REDIS_PORT=56379
-@@ -163,6 +167,7 @@
+@@ -162,6 +166,7 @@
  
  clean:
  	rm -rf $(DYLIBNAME) $(STLIBNAME) $(TESTS) $(PKGCONFNAME) examples/hiredis-example* *.o *.gcda *.gcno *.gcov
@@ -29,7 +29,7 @@
  
  dep:
  	$(CC) -MM *.c
-@@ -186,7 +191,14 @@
+@@ -181,7 +186,14 @@
  	@echo Libs: -L\$${libdir} -lhiredis >> $@
  	@echo Cflags: -I\$${includedir} -D_FILE_OFFSET_BITS=64 >> $@
  
@@ -42,10 +42,10 @@
 +		$(CMAKEVERSNAME).in >$(CMAKEVERSNAME)
 +
 +install: $(DYLIBNAME) $(STLIBNAME) $(PKGCONFNAME) $(CMAKECONFNAME) $(CMAKEVERSNAME)
- 	mkdir -p $(INSTALL_INCLUDE_PATH) $(INSTALL_LIBRARY_PATH)
- 	$(INSTALL) hiredis.h async.h read.h sds.h adapters $(INSTALL_INCLUDE_PATH)
- 	$(INSTALL) $(DYLIBNAME) $(INSTALL_LIBRARY_PATH)/$(DYLIB_MINOR_NAME)
-@@ -194,6 +206,9 @@
+ 	mkdir -p $(INSTALL_INCLUDE_PATH) $(INSTALL_INCLUDE_PATH)/adapters $(INSTALL_LIBRARY_PATH)
+ 	$(INSTALL) hiredis.h async.h read.h sds.h $(INSTALL_INCLUDE_PATH)
+ 	$(INSTALL) adapters/*.h $(INSTALL_INCLUDE_PATH)/adapters
+@@ -190,6 +202,9 @@
  	$(INSTALL) $(STLIBNAME) $(INSTALL_LIBRARY_PATH)
  	mkdir -p $(INSTALL_PKGCONF_PATH)
  	$(INSTALL) $(PKGCONFNAME) $(INSTALL_PKGCONF_PATH)
