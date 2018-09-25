@@ -84,16 +84,14 @@ void freeReplyObject(void *reply) {
     case REDIS_REPLY_ARRAY:
         if (r->element != NULL) {
             for (j = 0; j < r->elements; j++)
-                if (r->element[j] != NULL)
-                    freeReplyObject(r->element[j]);
+                freeReplyObject(r->element[j]);
             free(r->element);
         }
         break;
     case REDIS_REPLY_ERROR:
     case REDIS_REPLY_STATUS:
     case REDIS_REPLY_STRING:
-        if (r->str != NULL)
-            free(r->str);
+        free(r->str);
         break;
     }
     free(r);
@@ -432,11 +430,7 @@ cleanup:
     }
 
     sdsfree(curarg);
-
-    /* No need to check cmd since it is the last statement that can fail,
-     * but do it anyway to be as defensive as possible. */
-    if (cmd != NULL)
-        free(cmd);
+    free(cmd);
 
     return error_type;
 }
@@ -507,7 +501,7 @@ int redisFormatSdsCommandArgv(sds *target, int argc, const char **argv,
     cmd = sdscatfmt(cmd, "*%i\r\n", argc);
     for (j=0; j < argc; j++) {
         len = argvlen ? argvlen[j] : strlen(argv[j]);
-        cmd = sdscatfmt(cmd, "$%T\r\n", len);
+        cmd = sdscatfmt(cmd, "$%u\r\n", len);
         cmd = sdscatlen(cmd, argv[j], len);
         cmd = sdscatlen(cmd, "\r\n", sizeof("\r\n")-1);
     }
@@ -581,7 +575,7 @@ void __redisSetError(redisContext *c, int type, const char *str) {
     } else {
         /* Only REDIS_ERR_IO may lack a description! */
         assert(type == REDIS_ERR_IO);
-        __redis_strerror_r(errno, c->errstr, sizeof(c->errstr));
+        strerror_r(errno, c->errstr, sizeof(c->errstr));
     }
 }
 
@@ -596,14 +590,8 @@ static redisContext *redisContextInit(void) {
     if (c == NULL)
         return NULL;
 
-    c->err = 0;
-    c->errstr[0] = '\0';
     c->obuf = sdsempty();
     c->reader = redisReaderCreate();
-    c->tcp.host = NULL;
-    c->tcp.source_addr = NULL;
-    c->unix_sock.path = NULL;
-    c->timeout = NULL;
 
     if (c->obuf == NULL || c->reader == NULL) {
         redisFree(c);
@@ -618,18 +606,12 @@ void redisFree(redisContext *c) {
         return;
     if (c->fd > 0)
         close(c->fd);
-    if (c->obuf != NULL)
-        sdsfree(c->obuf);
-    if (c->reader != NULL)
-        redisReaderFree(c->reader);
-    if (c->tcp.host)
-        free(c->tcp.host);
-    if (c->tcp.source_addr)
-        free(c->tcp.source_addr);
-    if (c->unix_sock.path)
-        free(c->unix_sock.path);
-    if (c->timeout)
-        free(c->timeout);
+    sdsfree(c->obuf);
+    redisReaderFree(c->reader);
+    free(c->tcp.host);
+    free(c->tcp.source_addr);
+    free(c->unix_sock.path);
+    free(c->timeout);
     free(c);
 }
 
@@ -710,6 +692,8 @@ redisContext *redisConnectNonBlock(const char *ip, int port) {
 redisContext *redisConnectBindNonBlock(const char *ip, int port,
                                        const char *source_addr) {
     redisContext *c = redisContextInit();
+    if (c == NULL)
+        return NULL;
     c->flags &= ~REDIS_BLOCK;
     redisContextConnectBindTcp(c,ip,port,NULL,source_addr);
     return c;
@@ -718,6 +702,8 @@ redisContext *redisConnectBindNonBlock(const char *ip, int port,
 redisContext *redisConnectBindNonBlockWithReuse(const char *ip, int port,
                                                 const char *source_addr) {
     redisContext *c = redisContextInit();
+    if (c == NULL)
+        return NULL;
     c->flags &= ~REDIS_BLOCK;
     c->flags |= REDIS_REUSEADDR;
     redisContextConnectBindTcp(c,ip,port,NULL,source_addr);
@@ -822,10 +808,10 @@ int redisBufferRead(redisContext *c) {
 /* Write the output buffer to the socket.
  *
  * Returns REDIS_OK when the buffer is empty, or (a part of) the buffer was
- * succesfully written to the socket. When the buffer is empty after the
+ * successfully written to the socket. When the buffer is empty after the
  * write operation, "done" is set to 1 (if given).
  *
- * Returns REDIS_ERR if an error occured trying to write and sets
+ * Returns REDIS_ERR if an error occurred trying to write and sets
  * c->errstr to hold the appropriate error string.
  */
 int redisBufferWrite(redisContext *c, int *done) {
@@ -984,7 +970,7 @@ int redisAppendCommandArgv(redisContext *c, int argc, const char **argv, const s
  * context is non-blocking, the "reply" pointer will not be used and the
  * command is simply appended to the write buffer.
  *
- * Returns the reply when a reply was succesfully retrieved. Returns NULL
+ * Returns the reply when a reply was successfully retrieved. Returns NULL
  * otherwise. When NULL is returned in a blocking context, the error field
  * in the context will be set.
  */
@@ -1007,9 +993,8 @@ void *redisvCommand(redisContext *c, const char *format, va_list ap) {
 
 void *redisCommand(redisContext *c, const char *format, ...) {
     va_list ap;
-    void *reply = NULL;
     va_start(ap,format);
-    reply = redisvCommand(c,format,ap);
+    void *reply = redisvCommand(c,format,ap);
     va_end(ap);
     return reply;
 }
