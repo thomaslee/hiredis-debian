@@ -1,7 +1,7 @@
 Source: hiredis
 Priority: optional
 Maintainer: Tom Lee <debian@tomlee.co>
-Build-Depends: debhelper (>= 9.20160114),
+Build-Depends: debhelper (>= 10),
  redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any],
  procps
 Standards-Version: 4.2.1
