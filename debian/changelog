@@ -1,8 +1,22 @@
 hiredis (0.14.0-1) unstable; urgency=medium
 
-  * New upstream version 0.14.0
+  * New upstream version 0.14.0 (closes: #907259)
+  * Updated patches for 0.14.0
+  * Update Vcs-Git
+  * Use automatic debug packages
+  * Bump Standards-Version to 4.2.1
+  * Update Vcs-Browser
+  * Add DEP3 header to 07_cmake.patch
+  * Add DEB_BUILD_OPTIONS=nocheck support
+  * hardening=+all
+  * Add CPPFLAGS to compile command line
+  * Regenerate symbols file
+  * Add a simple functional test
+  * Use https for copyright format URL
+  * Bump to compat level 10
 
- -- Tom Lee <debian@tomlee.co>  Tue, 25 Sep 2018 16:18:00 -0700
+ -- Tom Lee <debian@tomlee.co>  Wed, 26 Sep 2018 13:22:50 -0700
+
 
 hiredis (0.13.3-2) unstable; urgency=medium
 
