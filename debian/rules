@@ -28,4 +28,4 @@ ifeq ($(REDIS), 1)
 endif
 
 override_dh_strip:
-	dh_strip --dbg-package=libhiredis-dbg
+	dh_strip --dbgsym-migration='libhiredis-dbg (<< 0.14.0-1~)'
