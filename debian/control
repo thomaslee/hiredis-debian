@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9),
 Standards-Version: 3.9.6
 Section: libs
 Homepage: https://github.com/redis/hiredis
-Vcs-Git: git://anonscm.debian.org/collab-maint/hiredis.git
+Vcs-Git: https://github.com/thomaslee/hiredis-capnproto
 Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/hiredis.git/
 
 Package: libhiredis0.14
