@@ -1,0 +1,17 @@
+Description: Add CPPFLAGS to REAL_CFLAGS
+Author: Thomas Lee <debian@tomlee.co>
+Forwarded: https://github.com/redis/hiredis/pull/614
+Last-Update: 2018-09-26
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -45,7 +45,7 @@
+ OPTIMIZATION?=-O3
+ WARNINGS=-Wall -W -Wstrict-prototypes -Wwrite-strings
+ DEBUG_FLAGS?= -g -ggdb
+-REAL_CFLAGS=$(OPTIMIZATION) -fPIC $(CFLAGS) $(WARNINGS) $(DEBUG_FLAGS)
++REAL_CFLAGS=$(OPTIMIZATION) -fPIC $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(DEBUG_FLAGS)
+ REAL_LDFLAGS=$(LDFLAGS)
+ 
+ DYLIBSUFFIX=so
