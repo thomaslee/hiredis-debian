@@ -8,7 +8,7 @@ Standards-Version: 4.2.1
 Section: libs
 Homepage: https://github.com/redis/hiredis
 Vcs-Git: https://github.com/thomaslee/hiredis-capnproto
-Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/hiredis.git/
+Vcs-Browser: https://github.com/thomaslee/hiredis-capnproto
 
 Package: libhiredis0.14
 Architecture: any
