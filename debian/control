@@ -4,7 +4,7 @@ Maintainer: Tom Lee <debian@tomlee.co>
 Build-Depends: debhelper (>= 9.20160114),
  redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any],
  procps
-Standards-Version: 3.9.6
+Standards-Version: 4.2.1
 Section: libs
 Homepage: https://github.com/redis/hiredis
 Vcs-Git: https://github.com/thomaslee/hiredis-capnproto
