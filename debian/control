@@ -1,7 +1,7 @@
 Source: hiredis
 Priority: optional
 Maintainer: Tom Lee <debian@tomlee.co>
-Build-Depends: debhelper (>= 10),
+Build-Depends: debhelper (>= 11),
  redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any],
  procps
 Standards-Version: 4.2.1
@@ -57,4 +57,3 @@ Description: minimalistic C client library for Redis (development files)
  asynchronous API and the reply parsing API.
  .
  This package provides the development files for hiredis.
-

@@ -1,5 +1,4 @@
 #!/usr/bin/make -f
-#export DH_VERBOSE=1
 
 REDIS   = $(shell [ -e /usr/bin/redis-server ] && echo 1 || echo 0)
 
@@ -24,6 +23,11 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install -- LIBRARY_PATH="lib/$(DEB_HOST_MULTIARCH)" \
 		PREFIX=/usr
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 644 debian/libhiredis-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
+	chmod 644 debian/libhiredis-dev/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/Hiredis/*.cmake
 
 override_dh_installchangelogs:
 	dh_installchangelogs CHANGELOG.md
