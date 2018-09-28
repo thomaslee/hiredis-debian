@@ -2,8 +2,8 @@ Source: hiredis
 Priority: optional
 Maintainer: Tom Lee <debian@tomlee.co>
 Build-Depends: debhelper (>= 11),
- redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any],
- procps
+ redis-server (>= 2:2.4.2-2) [linux-any kfreebsd-any] <!nocheck>,
+ procps <!nocheck>
 Standards-Version: 4.2.1
 Section: libs
 Homepage: https://github.com/redis/hiredis
