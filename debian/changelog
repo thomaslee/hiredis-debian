@@ -15,8 +15,10 @@ hiredis (0.14.0-1) unstable; urgency=medium
   * Use https for copyright format URL
   * Eliminate some unnecessary whitespace from debian/control
   * Bump to compat level 11
+  * Clean up debian/rules a bit
+  * Do not install redis-server and procps for nocheck builds
 
- -- Tom Lee <debian@tomlee.co>  Wed, 26 Sep 2018 13:22:50 -0700
+ -- Tom Lee <debian@tomlee.co>  Fri, 28 Sep 2018 14:18:32 -0700
 
 
 hiredis (0.13.3-2) unstable; urgency=medium
