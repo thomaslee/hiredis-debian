@@ -7,8 +7,8 @@ Build-Depends: debhelper (>= 11),
 Standards-Version: 4.2.1
 Section: libs
 Homepage: https://github.com/redis/hiredis
-Vcs-Git: https://github.com/thomaslee/hiredis-capnproto
-Vcs-Browser: https://github.com/thomaslee/hiredis-capnproto
+Vcs-Git: https://github.com/thomaslee/hiredis-debian
+Vcs-Browser: https://github.com/thomaslee/hiredis-debian
 
 Package: libhiredis0.14
 Architecture: any
