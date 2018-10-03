@@ -20,6 +20,13 @@ hiredis (0.14.0-1) unstable; urgency=medium
 
  -- Tom Lee <debian@tomlee.co>  Fri, 28 Sep 2018 14:18:32 -0700
 
+hiredis (0.13.3-2.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Drop -dbg package in favour of -dbgsym package.
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Jan 2018 07:14:08 +0000
+
 hiredis (0.13.3-2) unstable; urgency=medium
 
   * Ignore /tags
