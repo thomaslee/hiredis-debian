@@ -1,2 +1,2 @@
 Tests: trivial-build-test
-Depends: @, gcc, pkg-config
+Depends: @, gcc, pkg-config, libc-dev
