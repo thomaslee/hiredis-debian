@@ -1,3 +1,12 @@
+hiredis (0.14.0-2) unstable; urgency=medium
+
+  * Fix silly copy/paste error in Vcs-Git/Vcs-Browser
+  * Fix autopkgtest dependencies
+  * Whitespace fixup in changelogs
+  * Restore lost NMU changelog entry
+
+ -- Tom Lee <debian@tomlee.co>  Tue, 02 Oct 2018 23:24:57 -0700
+
 hiredis (0.14.0-1) unstable; urgency=medium
 
   * New upstream version 0.14.0 (closes: #907259)
